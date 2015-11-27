@@ -16,4 +16,8 @@ class Paths:
         return os.path.join(self.ROOT, 'public_test_images.mat')
     TEST_SET = property(get_test_set)
 
+    def get_hidden_set(self):
+        return os.path.join(self.ROOT, 'hidden_test_images.mat')
+    HIDDEN_SET = property(get_hidden_set)
+
 paths = Paths()

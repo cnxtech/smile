@@ -1,27 +1,21 @@
-import utils
 import knn
-import csv
-from conf import paths
+import submission
+import plot_digits
+import preprocessor
+from sklearn.metrics import classification_report
 
 def please():
-    tr_identity, tr_labels, tr_images = utils.load_train()
-    test_images = utils.load_test()
+    tr_identity, tr_labels, tr_images, valid_identity, valid_labels, valid_images = preprocessor.load_train_and_valid()
+    test_images = preprocessor.load_test()
 
     model = knn.KNeighbors(5)
     model.fit(tr_images, tr_labels)
-    test_labels = model.predict(test_images)
+    predictions = model.predict(valid_images)
 
-    with open(paths.OUTPUT, 'wb') as f:
-        writer = csv.writer(f)
-        writer.writerow(['Id', 'Prediction'])
+    target_names = ['Anger', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
+    print(classification_report(valid_labels, predictions, target_names=target_names))
 
-        samples = test_labels.shape[0]
-        for i in xrange(samples):
-            writer.writerow([i + 1, test_labels[i]])
-
-        if samples < 1253:
-            for i in xrange(1253 - samples):
-                writer.writerow([samples + i + 1, 0])
+    # submission.output(predictions)
 
 if __name__ == '__main__':
     please() # work

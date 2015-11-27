@@ -1,7 +1,6 @@
 # Competition files
 submission.csv
-labeled_images.mat
-public_test_images.mat
+*.mat
 
 # Mac stuff
 .DS_Store
