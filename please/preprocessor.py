@@ -43,15 +43,17 @@ def extract_data(image_map, tr_prob):
     valid_data = []
 
     for identity, labelled_images in image_map.items():
+        next_data = tr_data
+
+        if (len(tr_data) != 0 or len(valid_data) != 0):
+            tr_ratio = len(tr_data) / float(len(valid_data) + len(tr_data))
+            next_data = tr_data if tr_ratio < tr_prob else valid_data
+
         for (label, image) in labelled_images:
-            data = [identity, label, image]
-            if random.random() < tr_prob:
-                tr_data.append(data)
-            else:
-                valid_data.append(data)
+            next_data.append([identity, label, image])
 
     data = [zip(*tr_data), zip(*valid_data)]
-    return [item for sublist in data for item in sublist]
+    return [np.array(item) for sublist in data for item in sublist]
 
 def reshape_labels(labels):
     return labels.reshape(-1)

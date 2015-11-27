@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn import neighbors, datasets
+from sklearn import neighbors
 
 class KNeighbors:
     def __init__(self, K):
