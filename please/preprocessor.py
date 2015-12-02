@@ -12,6 +12,11 @@ def load_train():
 
     return pc_tr_identity, pc_tr_labels, pc_tr_images
 
+def load_unlabeled():
+    unlabeled_images = utils.load_unlabeled()
+    pc_unlabeled_images = reshape_images(unlabeled_images)
+    return pc_unlabeled_images
+
 def load_train_and_valid():
     tr_identity, tr_labels, tr_images = load_train()
 
@@ -28,12 +33,13 @@ def load_train_and_valid():
     return extract_data(image_map, 0.7)
 
 def load_test():
-    test_images, hidden_images = utils.load_test()
+    test_images = utils.load_test()
 
     pc_test_images = reshape_images(test_images)
-    pc_hidden_images = reshape_images(hidden_images)
+    # pc_hidden_images = reshape_images(hidden_images)
 
-    combined_images = np.concatenate((pc_test_images, pc_hidden_images))
+    # combined_images = np.concatenate((pc_test_images, pc_hidden_images))
+    combined_images = pc_test_images
     pc_combined_images = expose_images(combined_images)
 
     return pc_combined_images

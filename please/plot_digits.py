@@ -58,4 +58,4 @@ def show_pane(top_digits, bottom_digits):
     for axis, digit in zip(axes.reshape(-1), all_digits):
         axis.imshow(digit, interpolation='nearest', cmap=plt.gray())
         axis.axis('off')
-    plt.show()
+    plt.savefig('foo.png')
