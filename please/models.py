@@ -20,8 +20,9 @@ class KNN:
 class SVM:
     def __init__(self):
         self.classifier = svm.SVC(
+            C=1.0,
             kernel='linear',
-            decision_function_shape='ovr'
+            decision_function_shape='ovr',
         )
 
     def fit(self, data, target):
@@ -46,7 +47,6 @@ class AdaBoost:
             algorithm="SAMME.R",
             n_estimators=100
         )
-        self.name = "AdaBos"
 
     def fit(self, data, target):
         self.classifier.fit(data, target)
@@ -62,6 +62,7 @@ class AdaBoost:
 class PCA:
     def __init__(self):
         self.classifier = sklearn_PCA(n_components='mle')
+        # self.classifier = sklearn_PCA(n_components=320)
 
     def fit(self, unlabeld_data):
         self.classifier = self.classifier.fit(unlabeld_data)

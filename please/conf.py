@@ -12,17 +12,9 @@ class Paths:
         return os.path.join(self.ROOT, 'unlabeled_images.mat')
     UNLABELED_SET = property(get_unlabeled_set)
 
-    def get_tr_set1(self):
+    def get_tr_set(self):
         return os.path.join(self.ROOT, 'labeled_images.mat')
-    TR_SET1 = property(get_tr_set1)
-
-    def get_tr_set2(self):
-        return os.path.join(self.ROOT, 'labeled_images-2.mat')
-    TR_SET2 = property(get_tr_set2)
-
-    def get_tr_set3(self):
-        return os.path.join(self.ROOT, 'labeled_images-3.mat')
-    TR_SET3 = property(get_tr_set3)
+    TR_SET = property(get_tr_set)
 
     def get_test_set(self):
         return os.path.join(self.ROOT, 'public_test_images.mat')

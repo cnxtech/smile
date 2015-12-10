@@ -1,0 +1,159 @@
+Jiecaos-MacBook-Pro:please Coding$ python please.py
+########### Model PCA then SVM full componenets ##################
+
+########### Valid ##################
+
+             precision    recall  f1-score   support
+
+      Anger       0.53      0.53      0.53       129
+    Disgust       0.58      0.63      0.60       121
+       Fear       0.42      0.31      0.36       114
+      Happy       0.86      0.80      0.83       188
+        Sad       0.47      0.47      0.47       108
+   Surprise       0.73      0.56      0.63       133
+    Neutral       0.66      0.82      0.73       251
+
+avg / total       0.63      0.63      0.63      1044
+
+
+########### Train ##################
+
+             precision    recall  f1-score   support
+
+      Anger       0.89      0.83      0.86       181
+    Disgust       0.90      0.92      0.91       181
+       Fear       0.86      0.80      0.83       180
+      Happy       0.96      0.96      0.96       358
+        Sad       0.83      0.74      0.78       186
+   Surprise       0.92      0.89      0.91       184
+    Neutral       0.89      0.96      0.92       611
+
+avg / total       0.90      0.90      0.90      1881
+
+Jiecaos-MacBook-Pro:please Coding$
+
+
+
+Jiecaos-MacBook-Pro:please Coding$ python please.py
+########### Model PCA SVM, 10 components ##################
+
+########### Valid ##################
+
+             precision    recall  f1-score   support
+
+      Anger       0.47      0.22      0.30       125
+    Disgust       0.41      0.38      0.39       109
+       Fear       0.26      0.12      0.16       104
+      Happy       0.59      0.70      0.64       196
+        Sad       0.29      0.12      0.17       100
+   Surprise       0.52      0.37      0.44       131
+    Neutral       0.38      0.70      0.50       228
+
+avg / total       0.43      0.44      0.41       993
+
+
+########### Train ##################
+
+             precision    recall  f1-score   support
+
+      Anger       0.57      0.32      0.41       185
+    Disgust       0.42      0.34      0.37       193
+       Fear       0.23      0.05      0.09       190
+      Happy       0.61      0.73      0.67       350
+        Sad       0.30      0.12      0.17       194
+   Surprise       0.52      0.55      0.53       186
+    Neutral       0.54      0.79      0.64       634
+
+avg / total       0.49      0.53      0.48      1932
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SVM PLUS PCA, with PCA set to mle. 
+
+Jiecaos-MacBook-Pro:please Coding$ python please.py
+########### Model SVM ##################
+
+########### Valid ##################
+
+             precision    recall  f1-score   support
+
+      Anger       0.53      0.59      0.56       124
+    Disgust       0.52      0.60      0.56       115
+       Fear       0.49      0.43      0.46       108
+      Happy       0.89      0.84      0.87       195
+        Sad       0.52      0.33      0.40       104
+   Surprise       0.72      0.54      0.62       131
+    Neutral       0.63      0.82      0.71       216
+
+avg / total       0.64      0.64      0.63       993
+
+
+########### Train ##################
+
+             precision    recall  f1-score   support
+
+      Anger       0.80      0.87      0.84       186
+    Disgust       0.87      0.91      0.89       187
+       Fear       0.83      0.75      0.79       186
+      Happy       0.97      0.95      0.96       351
+        Sad       0.81      0.72      0.76       190
+   Surprise       0.92      0.90      0.91       186
+    Neutral       0.90      0.93      0.92       646
+
+avg / total       0.89      0.89      0.89      1932
+
+
+########### PCA vaiance ratio ##################
+
+
+
+
+SVM ONLY
+Jiecaos-MacBook-Pro:please Coding$ python please.py
+########### Model SVM ##################
+
+########### Valid  Please 2 ##################
+
+             precision    recall  f1-score   support
+
+      Anger       0.62      0.72      0.67        83
+    Disgust       0.60      0.68      0.64        80
+       Fear       0.42      0.55      0.48        62
+      Happy       0.87      0.86      0.86       156
+        Sad       0.51      0.35      0.42        79
+   Surprise       0.63      0.69      0.66        78
+    Neutral       0.84      0.76      0.80       266
+
+avg / total       0.71      0.71      0.71       804
+
+
+########### Train ##################
+
+             precision    recall  f1-score   support
+
+      Anger       0.99      0.96      0.98       227
+    Disgust       0.99      1.00      0.99       222
+       Fear       0.99      0.96      0.97       232
+      Happy       1.00      1.00      1.00       390
+        Sad       0.98      0.98      0.98       215
+   Surprise       0.98      0.99      0.99       239
+    Neutral       0.98      0.99      0.99       596
+
+avg / total       0.99      0.99      0.99      2121
+
+
+########### PCA vaiance ratio ##################
