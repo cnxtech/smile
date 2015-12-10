@@ -1,5 +1,4 @@
 import utils
-from skimage import exposure
 import numpy as np
 import random
 
@@ -8,7 +7,7 @@ def load_train():
 
     pc_tr_identity = reshape_labels(tr_identity)
     pc_tr_labels = reshape_labels(tr_labels)
-    pc_tr_images = expose_images(reshape_images(tr_images))
+    pc_tr_images = tr_images
 
     return pc_tr_identity, pc_tr_labels, pc_tr_images
 
@@ -30,7 +29,7 @@ def load_train_and_valid():
             image_map[identity] = []
         image_map[identity].append((label, image))
 
-    return extract_data(image_map, 0.7)
+    return extract_data(image_map, 0.8)
 
 def load_test():
     test_images = utils.load_test()
@@ -40,7 +39,7 @@ def load_test():
 
     # combined_images = np.concatenate((pc_test_images, pc_hidden_images))
     combined_images = pc_test_images
-    pc_combined_images = expose_images(combined_images)
+    pc_combined_images = combined_images
 
     return pc_combined_images
 
@@ -68,5 +67,12 @@ def reshape_images(images):
     height, width, count = images.shape
     return images.reshape(height * width, count).T
 
-def expose_images(images):
-    return exposure.equalize_hist(images)
+# (image, frequency, theta=0, bandwidth=1, sigma_x=None, sigma_y=None, n_stds=3, offset=0, mode='reflect', cval=0)
+
+def normalize_images(images):
+    images = np.copy(images.astype(np.float64))
+    for i in range(images.shape[0]):
+        image = images[i]
+        images[i] = (image - image.min()) / float(image.max() - image.min())
+
+    return images

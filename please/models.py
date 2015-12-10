@@ -20,8 +20,9 @@ class KNN:
 class SVM:
     def __init__(self):
         self.classifier = svm.SVC(
+            C=1.0,
             kernel='linear',
-            decision_function_shape='ovr'
+            decision_function_shape='ovr',
         )
 
     def fit(self, data, target):
@@ -46,7 +47,6 @@ class AdaBoost:
             algorithm="SAMME.R",
             n_estimators=100
         )
-        self.name = "AdaBos"
 
     def fit(self, data, target):
         self.classifier.fit(data, target)
