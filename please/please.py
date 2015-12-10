@@ -10,8 +10,10 @@ from sklearn.metrics import classification_report
 from scipy import ndimage as ndi
 from skimage.filters import gabor_kernel
 
-def gabor_please(submit_test_prediction):
+def gabor_please(enable_PCA, use_all, submit_test_prediction):
+    print "Using Gabor please, PCA: %s, use_all:%s, submit_test_prediction: %s" % (str(enable_PCA), str(use_all), str(submit_test_prediction))
     tr_identity, tr_labels, tr_images, valid_identity, valid_labels, valid_images = preprocessor.load_train_and_valid(is_gabor=True)
+    test_images = preprocessor.load_test(is_gabor=True)
 
     kernels = create_gabor_filters(
             [1.0/x for x in range(3, 15, 3)],
@@ -24,14 +26,20 @@ def gabor_please(submit_test_prediction):
     train_features = train_features.reshape(train_features.shape[0], 32 * 32 * 32)
     valid_features = compute_all_filter_responses(valid_images, kernels)
     valid_features = valid_features.reshape(valid_features.shape[0], 32 * 32 * 32)
-
-    model.fit(train_features, tr_labels)
+    test_features = compute_all_filter_responses(test_images, kernels)
+    test_features = test_features.reshape(test_features.shape[0], 32 * 32 * 32)
 
     ########## compute using both train and valid
-    # all_features = compute_all_filter_responses(np.concatenate(tr_images, valid_images), kernels)
-    # all_features = all_features.reshape(all_features.shape[0], 32 * 32 * 32)
-
-    # model.fit(all_features, np.concatenate((tr_labels, valid_labels)))
+    if(use_all):
+        all_features = compute_all_filter_responses(np.concatenate((tr_images, valid_images)), kernels)
+        all_features = all_features.reshape(all_features.shape[0], 32 * 32 * 32)
+        if (enable_PCA):
+            all_features, train_features, valid_features, test_features = PCA_Preprocess(all_features, train_features, valid_features, test_features)
+        model.fit(all_features, np.concatenate((tr_labels, valid_labels)))
+    else:
+        if(enable_PCA):
+            _train_features, train_features, valid_features, test_features = PCA_Preprocess(train_features, train_features, valid_features, test_features)
+        model.fit(train_features, tr_labels)
 
     train_predictions = model.predict(train_features)
     valid_predictions = model.predict(valid_features)
@@ -39,11 +47,18 @@ def gabor_please(submit_test_prediction):
     printClassificationRate(model, valid_labels, valid_predictions, tr_labels, train_predictions)
 
     if(submit_test_prediction):
-        test_images = preprocessor.load_test(is_gabor=True)
-        test_features = compute_all_filter_responses(test_images, kernels)
-        test_features = test_features.reshape(test_features.shape[0], 32 * 32 * 32)
         test_predictions = model.predict(test_features)
         submission.output(test_predictions)
+
+def PCA_Preprocess(pca_fit_data, train_features, valid_features, test_features):
+    pca = models.PCA()
+    pca.fit(pca_fit_data)
+    transformed_pca_fit_dat = pca.transform(pca_fit_data)
+    transformed_train_features = pca.transform(train_features)
+    transformed_valid_features = pca.transform(valid_features)
+    transformed_test_features = pca.transform(test_features)
+    print "PCA n components: %d" % (pca.get_n_components())
+    return transformed_pca_fit_dat, transformed_train_features, transformed_valid_features, transformed_test_features
     
 
 def please(submit_test_prediction):
@@ -130,8 +145,7 @@ def printClassificationRate(model, valid_labels, valid_predictions, tr_labels, t
     print(classification_report(valid_labels, valid_predictions, target_names=target_names))
     print "\n########### Train ##################\n"
     print(classification_report(tr_labels, train_predictions, target_names=target_names))
-    print "\n########### PCA vaiance ratio ##################\n"
 
 if __name__ == '__main__':
     # please(False) 
-    gabor_please(True)
+    gabor_please(enable_PCA=True, use_all=True, submit_test_prediction=True)

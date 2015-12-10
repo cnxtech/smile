@@ -61,11 +61,17 @@ class AdaBoost:
 # then we are going to use the model to compress labeled data, to get rid of the noise
 class PCA:
     def __init__(self):
-        self.classifier = sklearn_PCA(n_components='mle')
-        # self.classifier = sklearn_PCA(n_components=320)
+        # self.classifier = sklearn_PCA(n_components='mle')
+        self.classifier = sklearn_PCA(n_components=900)  #This is for gabor filter only!!!
+
+    def get_n_components(self):
+        return self.classifier.n_components_
 
     def fit(self, unlabeld_data):
         self.classifier = self.classifier.fit(unlabeld_data)
+
+    def fit_transform(self, unlabeld_data):
+        return self.classifier.fit_transform(unlabeld_data)
 
     def transform(self, labeled_data):
         return self.classifier.transform(labeled_data)
