@@ -148,4 +148,4 @@ def printClassificationRate(model, valid_labels, valid_predictions, tr_labels, t
 
 if __name__ == '__main__':
     # please(False) 
-    gabor_please(enable_PCA=True, use_all=True, submit_test_prediction=True)
+    gabor_please(enable_PCA=False, use_all=True, submit_test_prediction=True)
