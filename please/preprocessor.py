@@ -7,7 +7,7 @@ def load_train():
 
     pc_tr_identity = reshape_labels(tr_identity)
     pc_tr_labels = reshape_labels(tr_labels)
-    pc_tr_images = tr_images
+    pc_tr_images = reshape_images(tr_images)
 
     return pc_tr_identity, pc_tr_labels, pc_tr_images
 
@@ -35,13 +35,8 @@ def load_test():
     test_images = utils.load_test()
 
     pc_test_images = reshape_images(test_images)
-    # pc_hidden_images = reshape_images(hidden_images)
 
-    # combined_images = np.concatenate((pc_test_images, pc_hidden_images))
-    combined_images = pc_test_images
-    pc_combined_images = combined_images
-
-    return pc_combined_images
+    return pc_test_images
 
 def extract_data(image_map, tr_prob):
     tr_data = []
@@ -64,10 +59,7 @@ def reshape_labels(labels):
     return labels.reshape(-1)
 
 def reshape_images(images):
-    height, width, count = images.shape
-    return images.reshape(height * width, count).T
-
-# (image, frequency, theta=0, bandwidth=1, sigma_x=None, sigma_y=None, n_stds=3, offset=0, mode='reflect', cval=0)
+    return images.T
 
 def normalize_images(images):
     images = np.copy(images.astype(np.float64))

@@ -12,20 +12,33 @@ from skimage.filters import gabor_kernel
 
 def please():
     target_names = ['Anger', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
-    # tr_identity, tr_labels, tr_images, valid_identity, valid_labels, valid_images = preprocessor.load_train_and_valid()
-    # test_images = preprocessor.load_test()
+    tr_identity, tr_labels, tr_images, valid_identity, valid_labels, valid_images = preprocessor.load_train_and_valid()
+    test_images = preprocessor.load_test()
     # unlabeled_images = preprocessor.load_unlabeled()
-
-    tr_identity, tr_labels, tr_images = utils.load_train()
 
     kernels = create_gabor_filters(
             [1.0/x for x in range(3, 15, 3)],
             [x*np.pi*0.125 for x in range(8)],
             np.pi, np.pi)
 
-    features = compute_all_filter_responses(tr_images.T, kernels)
+    features = compute_all_filter_responses(np.concatenate((tr_images, valid_images)), kernels)
+    features = features.reshape(features.shape[0], 32 * 32 * 32)
 
-    return features
+    model = models.SVM()
+    model.fit(features, np.concatenate((tr_labels, valid_labels)))
+
+    # valid_features = compute_all_filter_responses(valid_images, kernels)
+    # valid_features = valid_features.reshape(valid_features.shape[0], 32 * 32 * 32)
+    # valid_predictions = model.predict(valid_features)
+
+    # print(classification_report(valid_labels, valid_predictions, target_names=target_names))
+
+    test_features = compute_all_filter_responses(test_images, kernels)
+    test_features = test_features.reshape(test_features.shape[0], 32 * 32 * 32)
+    test_predictions = model.predict(test_features)
+
+    submission.output(test_predictions)
+    return
 
     model = models.SVM()
     model.fit(tr_images, tr_labels)
